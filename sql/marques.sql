@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2017 at 09:11 AM
--- Server version: 10.1.19-MariaDB
--- PHP Version: 5.6.28
+-- Generation Time: Apr 03, 2017 at 09:11 AM
+-- Server version: 10.1.10-MariaDB
+-- PHP Version: 5.5.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -39,7 +39,7 @@ CREATE TABLE `accidents` (
   `Images` varchar(350) DEFAULT NULL,
   `EnteredBy` varchar(50) DEFAULT NULL,
   `DamageToVehicle` varchar(50) DEFAULT NULL,
-  `3rdPartyDamages` varchar(50) DEFAULT NULL,
+  `ThirdPartyDamages` varchar(50) DEFAULT NULL,
   `Time` varchar(50) DEFAULT NULL,
   `Deaths` varchar(50) DEFAULT NULL,
   `Location` varchar(50) DEFAULT NULL,
@@ -51,9 +51,9 @@ CREATE TABLE `accidents` (
 -- Dumping data for table `accidents`
 --
 
-INSERT INTO `accidents` (`Id`, `SysDate`, `Date`, `Fleet`, `Vehicle`, `Type`, `Details`, `Driver`, `Injured`, `Images`, `EnteredBy`, `DamageToVehicle`, `3rdPartyDamages`, `Time`, `Deaths`, `Location`, `StatusInjured`, `Category`) VALUES
+INSERT INTO `accidents` (`Id`, `SysDate`, `Date`, `Fleet`, `Vehicle`, `Type`, `Details`, `Driver`, `Injured`, `Images`, `EnteredBy`, `DamageToVehicle`, `ThirdPartyDamages`, `Time`, `Deaths`, `Location`, `StatusInjured`, `Category`) VALUES
 (4, '2016-08-25 08:45:59', '2016-08-10 00:00:00', 'Container Carriers', 'KR6584', 'Machine', 'Face to face accident with van', 'Keith Nurega', '2', 'screen-shot-2015-08-23-at-4-47-09-pm-e1440373742135.jpg', 'Mark Antony', 'Buffer damaged', 'Windscreen damaged', '08:30:00', '0', 'K8 Highway', 'Minor bruises. Hospitalized', NULL),
-(5, '2016-08-25 08:49:45', '2016-08-17 00:00:00', 'Container Carriers', 'KR6584', 'Machine', 'Face to face hit with another vehicle', 'Keith Nurega', '1', 'Truck-Accident-Lawyer-Columbia-South-Carolina.jpg', 'Mark Antony', 'Front dents', 'Front section fully destroyed. Light post fallen', '09:00:00', '1', 'Manning Town', 'Hand broken. Legs wounded', NULL);
+(5, '2017-03-30 12:34:08', '2016-08-17 00:00:00', 'Container Carriers', 'KR6584', 'Trailers', 'Face to face hit with another vehicle', 'MARK MATTHEW', '1', 'Truck-Accident-Lawyer-Columbia-South-Carolina.jpg', 'Mark Antony', 'Front dents', 'Front section fully destroyed. Light post fallen', '09:00:00', '1', 'Manning Town', 'Hand broken. Legs wounded', 'Hand broken. Legs wounded');
 
 -- --------------------------------------------------------
 
@@ -698,7 +698,7 @@ CREATE TABLE `maintenenace` (
 --
 
 INSERT INTO `maintenenace` (`Id`, `Fleet`, `Vehicle`, `Type`, `Supplier`, `Cost`, `Remarks`, `RefNo`, `SysDate`, `Date`, `EnteredBy`, `Approval`, `MeterReading`, `AccidentRef`, `PaymentVoucher`, `MaintType`) VALUES
-(23, 'Cargo Carriers', 'BF1470', 'Lorry', 'Kushi Tyres', '2500', '', '15', '2016-11-22 12:37:04', '2016-11-22 00:00:00', 'Brian Thomas', NULL, '25402', NULL, '5455', 'Full Service'),
+(23, 'Cargo Carriers', 'BF1470', 'Lorry', 'Kushi Tyres', '2500', NULL, 'Ref:OqMyW', '2017-03-30 14:42:16', '2016-11-22 00:00:00', 'Brian Thomas', '', '25402', '', '5455', 'Full Service'),
 (24, 'Container Carriers', 'KR6584', 'Machine', 'Meiken Traders', '2540', '', '6554', '2016-11-22 12:37:32', '2016-11-08 00:00:00', 'Brian Thomas', NULL, '25466', NULL, '545', 'Lub Service');
 
 -- --------------------------------------------------------
@@ -728,6 +728,22 @@ CREATE TABLE `otherrenewal` (
 
 INSERT INTO `otherrenewal` (`ID`, `Fleet`, `VehicleNo`, `VehicleType`, `PaymentType`, `PaymentDate`, `Cost`, `SystemDate`, `EnteredBy`, `PeriodFrom`, `PeriodTo`, `PaymentRef`) VALUES
 (2, 'Cement Carriers', 'SK3266', 'Machine', 'Emission Test', '2016-08-17 00:00:00', '2500', '2016-08-25 09:11:44', 'Mark Antony', '2016-08-16 00:00:00', '2017-08-16 00:00:00', '6336');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `repair`
+--
+
+CREATE TABLE `repair` (
+  `id` int(11) NOT NULL,
+  `vehicle` varchar(255) NOT NULL,
+  `part` varchar(255) NOT NULL,
+  `cost` int(245) NOT NULL,
+  `Date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `enteredBy` varchar(255) NOT NULL,
+  `Details` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1027,6 +1043,12 @@ ALTER TABLE `otherrenewal`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `repair`
+--
+ALTER TABLE `repair`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `rnewalmastertable`
 --
 ALTER TABLE `rnewalmastertable`
@@ -1166,6 +1188,11 @@ ALTER TABLE `maintenenace`
 ALTER TABLE `otherrenewal`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
+-- AUTO_INCREMENT for table `repair`
+--
+ALTER TABLE `repair`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `rnewalmastertable`
 --
 ALTER TABLE `rnewalmastertable`
@@ -1199,7 +1226,7 @@ ALTER TABLE `vehiclemaster`
 -- AUTO_INCREMENT for table `vehicletype`
 --
 ALTER TABLE `vehicletype`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- Constraints for dumped tables
 --
